@@ -12,7 +12,7 @@ import { APIResponse } from '../interfaces/APIResponse.interface';
   providedIn: 'root',
 })
 export class DBService {
-  constructor(private utilityService: UtilityService) {}
+  constructor() {}
   IMG_URL =
     'https://img.freepik.com/free-photo/3d-rendering-loft-luxury-living-room-with-bookshelf-near-bookshelf_105762-2224.jpg?semt=ais_hybrid&w=740';
 

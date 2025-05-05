@@ -3,5 +3,30 @@
   <span class="spacer"></span>
   <nav>
     <a mat-button routerLink="/" routerLinkActive="active">Home</a>
+    <a
+      mat-button
+      routerLink="/post"
+      routerLinkActive="active"
+      *ngIf="isAuthenticated"
+      >Post Listing</a
+    >
+    <a
+      mat-button
+      routerLink="/favorites"
+      routerLinkActive="active"
+      *ngIf="isAuthenticated"
+      >Favorites</a
+    >
+    <ng-container *ngIf="!isAuthenticated; else loggedIn">
+      <a mat-button routerLink="/login" routerLinkActive="active">Login</a>
+      <a mat-button routerLink="/signup" routerLinkActive="active">Signup</a>
+    </ng-container>
+    <ng-template #loggedIn>
+      <span class="user-info"> Logged in as {{ userName }} </span>
+      <button mat-button (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+    </ng-template>
   </nav>
 </mat-toolbar>
