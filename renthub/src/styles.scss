@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+:root {
+  --primary: #ff5a5f;
+  --accent: #00a699;
+  --background: #fafafa;
+  --surface: #fff;
+  --text-main: #222;
+  --text-secondary: #555;
+  --border: #e0e0e0;
+  --shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  --radius: 18px;
+  --font-main: "Nunito", "Inter", "Montserrat", Arial, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-main) !important;
+  background: var(--background);
+  color: var(--text-main);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+mat-icon,
+.material-icons {
+  font-family: "Material Icons" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  letter-spacing: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
