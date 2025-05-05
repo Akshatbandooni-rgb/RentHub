@@ -1,3 +1,4 @@
+import { UtilityService } from './../utils/utility.service';
 import { Labels } from '../enums/labels.enum';
 import { APIResponse } from '../interfaces/APIResponse.interface';
 import { User } from '../interfaces/user.interface';
@@ -9,7 +10,10 @@ import * as uuid from 'uuid';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private dbService: DBService) {}
+  constructor(
+    private dbService: DBService,
+    private utilityService: UtilityService
+  ) {}
 
   login(email: string, password: string): APIResponse {
     const users = this.dbService.getAllUsers();
@@ -29,6 +33,7 @@ export class AuthService {
     // Store user data in local storage
     localStorage.setItem(Labels.JWTToken, user.id);
     localStorage.setItem(Labels.LoggedInUser, JSON.stringify(user));
+    this.utilityService.setLoggedInUser(user);
     return {
       isSuccess: true,
       message: Labels.UserLoggedInSuccess,
@@ -39,6 +44,7 @@ export class AuthService {
   logout(): APIResponse {
     localStorage.removeItem(Labels.JWTToken);
     localStorage.removeItem(Labels.LoggedInUser);
+    this.utilityService.setLoggedInUser(null);
     return {
       isSuccess: true,
       message: Labels.UserLoggedOutSucess,

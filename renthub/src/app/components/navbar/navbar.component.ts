@@ -1,3 +1,4 @@
+import { UtilityService } from './../../utils/utility.service';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
@@ -22,11 +23,25 @@ import { AuthService } from '../../services/auth.service';
 export class NavbarComponent implements OnInit {
   isAuthenticated: boolean = false;
   userName: string = '';
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private utilityService: UtilityService
+  ) {}
   ngOnInit(): void {
     debugger;
     this.isAuthenticated = this.authService.isAuthenticated();
     this.userName = this.authService.getLoggedInUser()?.name ?? '';
+    // Subscribe to the loggedInUser observable to get the current user
+    this.utilityService.loggedInUser$.subscribe((user) => {
+      if (user) {
+        this.isAuthenticated = true;
+        this.userName = user.name;
+      } else {
+        this.isAuthenticated = false;
+        this.userName = '';
+      }
+    });
   }
 
   logout() {

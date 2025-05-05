@@ -5,11 +5,15 @@ import { Amenity } from '../enums/amenities.enum';
 import { User } from '../interfaces/user.interface';
 import { Comment } from '../interfaces/comments.interface';
 import { Labels } from '../enums/labels.enum';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilityService {
+  private loggedInUserSubject = new BehaviorSubject<User | null>(null);
+  loggedInUser$ = this.loggedInUserSubject.asObservable();
+
   constructor() {}
 
   persistData(
@@ -26,5 +30,9 @@ export class UtilityService {
     if (comments !== null) {
       localStorage.setItem(Labels.Comments, JSON.stringify(comments));
     }
+  }
+
+  setLoggedInUser(user: User | null): void {
+    this.loggedInUserSubject.next(user);
   }
 }
