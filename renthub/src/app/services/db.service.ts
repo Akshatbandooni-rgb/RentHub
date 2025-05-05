@@ -6,6 +6,7 @@ import { Amenity } from '../enums/amenities.enum';
 import { User } from '../interfaces/user.interface';
 import { Comment } from '../interfaces/comments.interface';
 import { Labels } from '../enums/labels.enum';
+import { APIResponse } from '../interfaces/APIResponse.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -422,14 +423,38 @@ export class DBService {
     const apartments = localStorage.getItem(Labels.Apartments);
     return apartments ? JSON.parse(apartments) : [];
   }
+
   getAllUsers(): User[] {
     const users = localStorage.getItem(Labels.Users);
     return users ? JSON.parse(users) : [];
   }
 
-  addApartment(apartment: Apartment): void {
+  addUser(newUser: User): APIResponse {
+    const users = this.getAllUsers();
+    const user = users.find((user) => user.email === newUser.email);
+    if (user) {
+      return {
+        isSuccess: false,
+        message: Labels.UserAlreadyExists,
+      };
+    }
+    users.push(newUser);
+    localStorage.setItem(Labels.Users, JSON.stringify(users));
+    return {
+      isSuccess: true,
+      message: Labels.UserRegisteredSuccess,
+      data: newUser,
+    };
+  }
+
+  addApartment(apartment: Apartment): APIResponse {
     const apartments = this.getAllApartments();
     apartments.push(apartment);
     localStorage.setItem(Labels.Apartments, JSON.stringify(apartments));
+    return {
+      isSuccess: true,
+      message: Labels.ApartmentListedSuccess,
+      data: apartment,
+    };
   }
 }
