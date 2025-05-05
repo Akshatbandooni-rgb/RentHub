@@ -73,4 +73,12 @@ export class AuthService {
     }
     return null;
   }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem(Labels.JWTToken);
+    if (token) {
+      return true;
+    }
+    return false;
+  }
 }
