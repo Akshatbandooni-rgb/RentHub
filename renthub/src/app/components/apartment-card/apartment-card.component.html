@@ -1,0 +1,41 @@
+<mat-card class="apartment-card">
+  <mat-chip
+    *ngIf="apartment.featured"
+    class="featured-chip"
+    color="accent"
+    selected
+    size="small"
+  >
+    Featured
+  </mat-chip>
+  <img mat-card-image [src]="apartment.image" [alt]="apartment.title" />
+  <mat-card-content>
+    <div class="apartment-title">
+      {{ apartment.title }}
+      <span *ngIf="apartment.badge" class="apartment-badge">{{
+        apartment.badge
+      }}</span>
+    </div>
+    <div class="apartment-description">{{ apartment.description }}</div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="viewApartmentDetails(apartment)"
+    >
+      <mat-icon>visibility</mat-icon> View Details
+    </button>
+    <button
+      [disabled]="!isAuthenticated"
+      mat-stroked-button
+      [color]="apartment.isFavorite ? 'accent' : undefined"
+      (click)="toggleFavorite.emit(apartment.id)"
+    >
+      <mat-icon>{{
+        apartment.isFavorite ? "favorite" : "favorite_border"
+      }}</mat-icon>
+      Mark as Favorite
+    </button>
+  </mat-card-actions>
+</mat-card>
