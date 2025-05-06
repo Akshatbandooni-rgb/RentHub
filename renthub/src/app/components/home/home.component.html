@@ -1,59 +1,66 @@
 <div class="home-container">
-  <!-- Featured Listings Section -->
-  <div class="featured-section">
-    <div class="featured-carousel">
-      <button mat-icon-button (click)="prevFeatured()">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-      <img
-        class="featured-image"
-        [src]="featuredListings[featuredIndex].image"
-        [alt]="featuredListings[featuredIndex].title"
-      />
-      <button mat-icon-button (click)="nextFeatured()">
-        <mat-icon>chevron_right</mat-icon>
-      </button>
+  <div class="home-main-content">
+    <div class="home-filter-col">
+      <app-filter></app-filter>
     </div>
-    <div class="featured-sidebar">
-      <h3>Featured Listings</h3>
-      <p>{{ featuredListings[featuredIndex].description }}</p>
-      <div class="featured-actions">
-        <button
-          mat-stroked-button
-          color="primary"
-          (click)="viewDetails(featuredListings[featuredIndex].id)"
-        >
-          View Details
-        </button>
-        <button
-          mat-stroked-button
-          (click)="toggleFavorite(featuredListings[featuredIndex].id)"
-        >
-          Mark as Favorite
-        </button>
+    <div class="home-content-col">
+      <!-- Featured Listings Section -->
+      <div class="featured-section">
+        <div class="featured-carousel">
+          <button mat-icon-button (click)="prevFeatured()">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <img
+            class="featured-image"
+            [src]="featuredListings[featuredIndex].image"
+            [alt]="featuredListings[featuredIndex].title"
+          />
+          <button mat-icon-button (click)="nextFeatured()">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+        <div class="featured-sidebar">
+          <h3>Featured Listings</h3>
+          <p>{{ featuredListings[featuredIndex].description }}</p>
+          <div class="featured-actions">
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="viewDetails(featuredListings[featuredIndex].id)"
+            >
+              View Details
+            </button>
+            <button
+              mat-stroked-button
+              (click)="toggleFavorite(featuredListings[featuredIndex].id)"
+            >
+              Mark as Favorite
+            </button>
+          </div>
+        </div>
       </div>
+
+      <!-- All Listings Section -->
+      <h2 class="section-title">All Listings</h2>
+      <div class="apartments-grid">
+        @for (apartment of filteredApartments.slice(pageIndex * pageSize,
+        (pageIndex + 1) * pageSize); track apartment.id) {
+        <app-apartment-card
+          [apartment]="apartment"
+          (viewDetails)="viewDetails($event)"
+          (toggleFavorite)="toggleFavorite($event)"
+        ></app-apartment-card>
+        }
+      </div>
+
+      <mat-paginator
+        [length]="filteredApartments.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="handlePageEvent($event)"
+        aria-label="Select page"
+      >
+      </mat-paginator>
     </div>
   </div>
-
-  <!-- All Listings Section -->
-  <h2 class="section-title">All Listings</h2>
-  <div class="apartments-grid">
-    @for (apartment of filteredApartments.slice(pageIndex * pageSize, (pageIndex
-    + 1) * pageSize); track apartment.id) {
-    <app-apartment-card
-      [apartment]="apartment"
-      (viewDetails)="viewDetails($event)"
-      (toggleFavorite)="toggleFavorite($event)"
-    ></app-apartment-card>
-    }
-  </div>
-
-  <mat-paginator
-    [length]="filteredApartments.length"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
-    (page)="handlePageEvent($event)"
-    aria-label="Select page"
-  >
-  </mat-paginator>
 </div>

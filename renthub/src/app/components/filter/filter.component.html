@@ -1,0 +1,54 @@
+<form [formGroup]="filterForm" class="filter-form airbnb-card">
+  <h3 class="filter-title">Filter Apartments</h3>
+  <div class="filter-section">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Location</mat-label>
+      <input matInput formControlName="location" placeholder="Enter location" />
+    </mat-form-field>
+    <div class="price-slider">
+      <label for="price" class="section-label"
+        >Max Price:
+        <span class="price-value"
+          >₹{{ filterForm.get("price")?.value || 100 }}</span
+        ></label
+      >
+      <input
+        formControlName="price"
+        type="range"
+        id="price"
+        min="100"
+        max="5000"
+        step="50"
+      />
+    </div>
+  </div>
+  <div class="filter-section">
+    <label class="section-label">Food Preference:</label>
+    <mat-radio-group formControlName="vegetarian" class="veg-group">
+      <mat-radio-button value="yes">Vegetarian</mat-radio-button>
+      <mat-radio-button value="no">Non-Vegetarian</mat-radio-button>
+      <mat-radio-button value="either">Either</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="filter-section amenities">
+    <label class="section-label">Amenities:</label>
+    <div formGroupName="amenities">
+      <div class="amenities-list">
+        <ng-container *ngFor="let key of amenitiesKeys">
+          <mat-checkbox [formControlName]="key">{{ key }}</mat-checkbox>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="button-row">
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      class="apply-btn"
+      (click)="handleClick()"
+    >
+      Apply Filters
+    </button>
+  </div>
+</form>

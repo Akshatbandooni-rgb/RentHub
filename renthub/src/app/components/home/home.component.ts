@@ -20,6 +20,7 @@ import {
   ApartmentCardData,
 } from '../../interfaces/apartment.interface';
 import { Amenity } from '../../enums/amenities.enum';
+import { FilterComponent } from '../filter/filter.component';
 
 @Component({
   selector: 'app-home',
@@ -38,6 +39,7 @@ import { Amenity } from '../../enums/amenities.enum';
     ReactiveFormsModule,
     RouterModule,
     ApartmentCardComponent,
+    FilterComponent,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
