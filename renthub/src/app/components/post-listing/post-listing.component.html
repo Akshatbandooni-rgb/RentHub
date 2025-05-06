@@ -130,11 +130,13 @@
               </p>
               <div class="amenities">
                 <strong>Amenities:</strong>
-                <span
-                  *ngFor="let amenity of previewData.amenities"
-                  class="amenity-tag airbnb-pill"
-                  >{{ amenity }}</span
-                >
+                <div class="amenities-list preview">
+                  <span
+                    *ngFor="let amenity of previewData.amenities"
+                    class="amenity-tag airbnb-pill"
+                    >{{ amenity }}</span
+                  >
+                </div>
               </div>
             </div>
           </mat-card-content>

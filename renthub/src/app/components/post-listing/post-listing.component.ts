@@ -18,6 +18,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { Apartment } from '../../interfaces/apartment.interface';
 import { DBService } from '../../services/db.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-post-listing',
@@ -87,6 +88,7 @@ export class PostListingComponent implements OnInit {
 
       this.previewData = {
         ...formValue,
+        id: uuidv4(),
         amenities,
         image: URL.createObjectURL(this.selectedFile),
       };
@@ -95,7 +97,6 @@ export class PostListingComponent implements OnInit {
 
   submitListing(): void {
     if (this.previewData) {
-      // In a real app, this would save to a backend
       console.log('Submitting listing:', this.previewData);
       this.dbService.addApartment(this.previewData);
       this.router.navigate(['/']);
