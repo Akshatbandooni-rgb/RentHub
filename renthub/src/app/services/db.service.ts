@@ -7,6 +7,7 @@ import { User } from '../interfaces/user.interface';
 import { Comment } from '../interfaces/comments.interface';
 import { Labels } from '../enums/labels.enum';
 import { APIResponse } from '../interfaces/APIResponse.interface';
+import { Favorite } from '../interfaces/favorite.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -455,6 +456,75 @@ export class DBService {
       isSuccess: true,
       message: Labels.ApartmentListedSuccess,
       data: apartment,
+    };
+  }
+
+  getAllFavorites(): Favorite[] {
+    const favorites = localStorage.getItem(Labels.UserFavorites);
+    return favorites ? JSON.parse(favorites) : [];
+  }
+
+  getUserFavorites(userId: string): Favorite[] {
+    const favorites = this.getAllFavorites();
+    return favorites.filter((favorite) => {
+      return favorite.userId === userId;
+    });
+  }
+
+  isApartmentFavoritedByUser(userId: string, apartmentId: string): boolean {
+    const favorites = this.getUserFavorites(userId);
+    return favorites.some((favorite) => favorite.apartmentId === apartmentId);
+  }
+
+  markAsFavorite(userId: string, apartmentId: string): APIResponse {
+    const favorites = this.getAllFavorites();
+    const existingFavorite = favorites.find(
+      (favorite) =>
+        favorite.userId === userId && favorite.apartmentId === apartmentId
+    );
+    if (existingFavorite) {
+      return {
+        isSuccess: false,
+        message: 'Already marked as favorite',
+      };
+    }
+    const newFavorite: Favorite = {
+      userId,
+      apartmentId,
+    };
+    favorites.push(newFavorite);
+    localStorage.setItem(Labels.UserFavorites, JSON.stringify(favorites));
+    return {
+      isSuccess: true,
+      message: 'Marked as favorite',
+      data: apartmentId,
+    };
+  }
+
+  removeFavorite(userId: string, apartmentId: string): APIResponse {
+    const allFavorites = this.getAllFavorites();
+
+    const filteredFavorites = allFavorites.filter(
+      (favorite) =>
+        !(favorite.userId === userId && favorite.apartmentId === apartmentId)
+    );
+
+    if (allFavorites.length === filteredFavorites.length) {
+      return {
+        isSuccess: false,
+        message: 'Favorite not found',
+      };
+    }
+
+    localStorage.setItem(
+      Labels.UserFavorites,
+      JSON.stringify(filteredFavorites)
+    );
+
+    return {
+      isSuccess: true,
+      message: 'Removed from favorites',
+      data: apartmentId,
     };
   }
 }

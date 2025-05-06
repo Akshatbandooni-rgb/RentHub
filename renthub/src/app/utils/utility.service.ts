@@ -35,4 +35,8 @@ export class UtilityService {
   setLoggedInUser(user: User | null): void {
     this.loggedInUserSubject.next(user);
   }
+
+  getLoggedInUser(): User | null {
+    return this.loggedInUserSubject.getValue();
+  }
 }

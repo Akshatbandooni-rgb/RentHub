@@ -5,6 +5,7 @@ export const enum Labels {
   Comments = 'comments',
   LoggedInUser = 'loggedInUser',
   JWTToken = 'jwtToken',
+  UserFavorites = 'userFavorites',
 
   //Success Messages
   UserLoggedInSuccess = 'User logged in successfully',

@@ -1,3 +1,4 @@
+import { UtilityService } from './../../utils/utility.service';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -59,7 +60,8 @@ export class HomeComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private db: DBService,
-    public authService: AuthService
+    private authService: AuthService,
+    private utilityService: UtilityService
   ) {}
 
   ngOnInit(): void {
@@ -137,5 +139,31 @@ export class HomeComponent implements OnInit {
     this.pageIndex = event.pageIndex;
   }
 
-  toggleFavorite(apartmentId: string): void {}
+  toggleFavorite(apartmentId: string): void {
+    const user = this.authService.getLoggedInUser();
+    if (!user) return;
+
+    const isFavorite = this.db.isApartmentFavoritedByUser(user.id, apartmentId);
+    const response = isFavorite
+      ? this.db.removeFavorite(user.id, apartmentId)
+      : this.db.markAsFavorite(user.id, apartmentId);
+
+    if (response.isSuccess) {
+      this.updateApartmentFavoriteStatus(apartmentId, !isFavorite);
+    } else {
+      console.error(
+        `Error ${isFavorite ? 'removing' : 'adding'} favorite:`,
+        response.message
+      );
+    }
+  }
+
+  private updateApartmentFavoriteStatus(
+    apartmentId: string,
+    isFavorite: boolean
+  ): void {
+    this.filteredApartments = this.filteredApartments.map((apartment) =>
+      apartment.id === apartmentId ? { ...apartment, isFavorite } : apartment
+    );
+  }
 }
