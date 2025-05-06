@@ -120,18 +120,19 @@ label {
 
 .button-row {
   display: flex;
-  justify-content: flex-end;
-  gap: 1.5rem;
+  justify-content: space-between;
+  gap: 0.5rem;
   font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
   width: 100%;
 }
 
-.apply-btn {
+.apply-btn,
+.reset-btn {
   font-family: var(--font-main);
   width: 100%;
   font-size: 1.1rem;
   font-weight: 800;
-  padding: 1.1rem 0;
+  padding: 12px 0;
   letter-spacing: 0.1em;
   border-radius: 10px;
   background: var(--primary);
@@ -142,7 +143,9 @@ label {
 }
 
 .apply-btn:hover,
-.apply-btn:focus {
+.apply-btn:focus,
+.reset-btn:hover,
+.reset-btn:focus {
   background: var(--accent);
   color: #fff;
 }
