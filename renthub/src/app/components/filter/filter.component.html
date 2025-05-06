@@ -24,11 +24,12 @@
   </div>
   <div class="filter-section">
     <label class="section-label">Food Preference:</label>
-    <mat-radio-group formControlName="vegetarian" class="veg-group">
-      <mat-radio-button value="yes">Vegetarian</mat-radio-button>
-      <mat-radio-button value="no">Non-Vegetarian</mat-radio-button>
-      <mat-radio-button value="either">Either</mat-radio-button>
-    </mat-radio-group>
+    <section class="veg-group">
+      <mat-checkbox formControlName="vegetarian">Vegetarian</mat-checkbox>
+      <mat-checkbox formControlName="nonVegetarian"
+        >Non Vegetarian</mat-checkbox
+      >
+    </section>
   </div>
   <div class="filter-section amenities">
     <label class="section-label">Amenities:</label>
@@ -46,7 +47,7 @@
       color="primary"
       type="button"
       class="apply-btn"
-      (click)="handleClick()"
+      (click)="applyFilters()"
     >
       Apply
     </button>
@@ -55,7 +56,7 @@
       color="primary"
       type="button"
       class="reset-btn"
-      (click)="handleClick()"
+      (click)="resetFilters()"
     >
       Reset
     </button>

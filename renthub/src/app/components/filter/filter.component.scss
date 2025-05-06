@@ -148,6 +148,7 @@ label {
 .reset-btn:focus {
   background: var(--accent);
   color: #fff;
+  cursor: pointer;
 }
 
 // Force Nunito font on all Angular Material controls and their labels in this component

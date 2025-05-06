@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -29,13 +29,8 @@ import { CommonModule } from '@angular/common';
 export class FilterComponent implements OnInit {
   filterForm!: FormGroup;
   amenitiesKeys: string[] = [];
-
-  amenityLabel(key: string): string {
-    return key
-      .replace(/([A-Z])/g, ' $1')
-      .replace(/^./, (str) => str.toUpperCase())
-      .trim();
-  }
+  @Output() filterApplied = new EventEmitter<any>();
+  @Output() resetFilter = new EventEmitter<any>();
 
   constructor(private fb: FormBuilder) {}
   ngOnInit(): void {
@@ -50,11 +45,51 @@ export class FilterComponent implements OnInit {
       location: [''],
       price: [''],
       amenities: this.fb.group(amenityControls),
-      vegetarian: [''],
+      vegetarian: [false],
+      nonVegetarian: [false],
     });
   }
 
-  handleClick() {
-    console.log(this.filterForm);
+  applyFilters() {
+    console.log(this.filterForm.value);
+    const formValues = this.filterForm.value;
+    // Filter out the amenities that are checked by user
+    const selectedAmenities = Object.keys(formValues.amenities).filter(
+      (key) => formValues.amenities[key]
+    );
+    const filters = {
+      location: formValues.location,
+      price: formValues.price,
+      amenities: selectedAmenities,
+      vegetarian: formValues.vegetarian,
+      nonVegetarian: formValues.nonVegetarian,
+    };
+    this.filterApplied.emit(filters);
+  }
+
+  resetFilters() {
+    this.filterForm.reset(); // set all value to null
+    console.log(this.filterForm.value);
+    const amenityControls: any = {};
+    for (const key in Amenity) {
+      amenityControls[key] = false;
+    }
+    this.filterForm.setValue({
+      location: '',
+      price: '',
+      amenities: amenityControls,
+      vegetarian: false,
+      nonVegetarian: false,
+    });
+    const formValues = this.filterForm.value;
+    const resettedFilters = {
+      location: formValues.location,
+      price: formValues.price,
+      amenities: [],
+      vegetarian: formValues.vegetarian,
+    };
+    console.log(this.filterForm.value);
+    console.log(resettedFilters);
+    this.resetFilter.emit(resettedFilters);
   }
 }
