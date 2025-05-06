@@ -1,5 +1,5 @@
-import { UtilityService } from './../../utils/utility.service';
-import { Component, OnInit } from '@angular/core';
+import { AppStore } from './../../store/app-store.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -44,26 +44,25 @@ import { FilterComponent } from '../filter/filter.component';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   searchForm!: FormGroup;
   apartments: Apartment[] = [];
   filteredApartments: ApartmentCardData[] = [];
   pageSize = 6;
   pageIndex = 0;
   pageSizeOptions = [6, 12, 18, 24, 48];
-
-  // Featured listings logic
   featuredListings: Apartment[] = [];
   featuredIndex = 0;
   IMG_URL =
     'https://img.freepik.com/free-photo/3d-rendering-loft-luxury-living-room-with-bookshelf-near-bookshelf_105762-2224.jpg?semt=ais_hybrid&w=740';
+  filterCriteria = {};
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private db: DBService,
     private authService: AuthService,
-    private utilityService: UtilityService
+    private appStore: AppStore
   ) {}
 
   ngOnInit(): void {
@@ -79,8 +78,16 @@ export class HomeComponent implements OnInit {
       vegetarian: [''],
     });
 
-    // Mock data
-    this.apartments = this.db.getAllApartments();
+    const storedApartments = this.appStore.getFilteredApartments();
+    const storedFilterCriteria = this.appStore.getFilterCriteria();
+    if (storedApartments && storedApartments.length > 0) {
+      this.apartments = storedApartments;
+    } else {
+      this.apartments = this.db.getAllApartments();
+    }
+    if (storedFilterCriteria) {
+      this.filterCriteria = storedFilterCriteria;
+    }
 
     this.filteredApartments = [...this.apartments].map((apartment) => ({
       ...apartment,
@@ -108,6 +115,7 @@ export class HomeComponent implements OnInit {
   }
 
   filterApartments(filters: any): void {
+    this.filterCriteria = filters;
     debugger;
     const { location, price, amenities, vegetarian, nonVegetarian } = filters;
 
@@ -146,6 +154,7 @@ export class HomeComponent implements OnInit {
   }
 
   resetFilters(filters: any): void {
+    this.filterCriteria = filters;
     console.log('Reset Filters:', filters);
     this.apartments = this.db.getAllApartments();
     this.filteredApartments = [...this.apartments];
@@ -182,5 +191,10 @@ export class HomeComponent implements OnInit {
     this.filteredApartments = this.filteredApartments.map((apartment) =>
       apartment.id === apartmentId ? { ...apartment, isFavorite } : apartment
     );
+  }
+
+  ngOnDestroy(): void {
+    this.appStore.setFilteredApartments(this.filteredApartments);
+    this.appStore.setFilterCriteria(this.filterCriteria);
   }
 }
