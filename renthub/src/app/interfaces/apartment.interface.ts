@@ -17,7 +17,7 @@ export interface Apartment extends BaseApartment {
   landlordId?: string;
 }
 
-export interface ApartmentCardData extends BaseApartment {
+export interface ApartmentCardData extends Apartment {
   badge?: string;
   isFavorite?: boolean;
 }
