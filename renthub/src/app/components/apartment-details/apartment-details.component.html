@@ -1,1 +1,62 @@
-<p>apartment-details works!</p>
+<div class="apartment-details-container">
+  <div class="details-section">
+    <img class="main-image" [src]="apartment?.image" [alt]="apartment?.title" />
+    <div class="info">
+      <h1>{{ apartment?.title }}</h1>
+      <div class="price-location">
+        <span class="price">${{ apartment?.price }}/month</span>
+        <span class="location">{{ apartment?.location }}</span>
+      </div>
+      <div class="description">{{ apartment?.description }}</div>
+      <div class="amenities">
+        <span *ngFor="let amenity of apartment?.amenities" class="amenity-tag">
+          <mat-icon>{{ amenityIcons[amenity] || "check_circle" }}</mat-icon>
+          {{ amenity }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider class="details-divider"></mat-divider>
+
+  <div class="comments-section">
+    <h2>Comments</h2>
+    <form
+      [formGroup]="commentForm"
+      (ngSubmit)="submitComment()"
+      class="comment-form"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Add a comment</mat-label>
+        <input
+          matInput
+          formControlName="content"
+          placeholder="Write your comment..."
+        />
+        <mat-error *ngIf="commentForm.get('content')?.hasError('required')">
+          Comment is required
+        </mat-error>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="commentForm.invalid || !isAuthenticated"
+      >
+        Post
+      </button>
+    </form>
+    <div class="comments-list">
+      <div class="comment fade-in" *ngFor="let comment of comments">
+        <div class="comment-header">
+          <span class="avatar">{{ comment.avatarInitials }}</span>
+          <span class="author">{{ comment.author }}</span>
+          <span class="timestamp">{{
+            comment.timestamp | date : "short"
+          }}</span>
+        </div>
+        <div class="comment-content">{{ comment.content }}</div>
+      </div>
+    </div>
+  </div>
+</div>

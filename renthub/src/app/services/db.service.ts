@@ -1,4 +1,3 @@
-import { UtilityService } from './../utils/utility.service';
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { Apartment } from '../interfaces/apartment.interface';
@@ -387,33 +386,33 @@ export class DBService {
     ];
   }
 
-  generateComments(apartments: Apartment[]): Comment[] {
+  generateComments(apartments: Apartment[], users: User[]): Comment[] {
     return [
       {
         id: uuidv4(),
         apartmentId: apartments[0].id,
-        userId: this.generateUsers()[0].id,
+        userId: users[0].id,
         content: 'Amazing apartment!',
         timestamp: new Date(),
       },
       {
         id: uuidv4(),
         apartmentId: apartments[1].id,
-        userId: this.generateUsers()[0].id,
+        userId: users[0].id,
         content: 'Loved the amenities!',
         timestamp: new Date(),
       },
       {
         id: uuidv4(),
         apartmentId: apartments[2].id,
-        userId: this.generateUsers()[0].id,
+        userId: users[0].id,
         content: 'Great value for money.',
         timestamp: new Date(),
       },
       {
         id: uuidv4(),
         apartmentId: apartments[3].id,
-        userId: this.generateUsers()[0].id,
+        userId: users[0].id,
         content: 'Very cozy and comfortable.',
         timestamp: new Date(),
       },
@@ -425,9 +424,48 @@ export class DBService {
     return apartments ? JSON.parse(apartments) : [];
   }
 
+  getApartmentById(id: string): Apartment | null {
+    const apartments = this.getAllApartments();
+    return apartments.find((apartment) => apartment.id === id) || null;
+  }
+
+  getAllComments(): Comment[] {
+    const comments = localStorage.getItem(Labels.Comments);
+    return comments ? JSON.parse(comments) : [];
+  }
+
+  getCommentsForApartment(apartmentId: string): Comment[] {
+    const allComments = this.getAllComments();
+    return allComments.filter((comment) => {
+      return comment.apartmentId === apartmentId;
+    });
+  }
+
+  addComment(comment: Comment): APIResponse {
+    if (!comment.apartmentId || !comment.userId) {
+      return {
+        isSuccess: false,
+        message: 'Invalid apartment or user ID',
+      };
+    }
+    const allComments = this.getAllComments();
+    allComments.push(comment);
+    localStorage.setItem(Labels.Comments, JSON.stringify(allComments));
+    return {
+      isSuccess: true,
+      message: 'Comment added successfully',
+      data: comment,
+    };
+  }
+
   getAllUsers(): User[] {
     const users = localStorage.getItem(Labels.Users);
     return users ? JSON.parse(users) : [];
+  }
+
+  getUserById(id: string): User | null {
+    const users = this.getAllUsers();
+    return users.find((user) => user.id === id) || null;
   }
 
   addUser(newUser: User): APIResponse {
@@ -477,6 +515,12 @@ export class DBService {
   }
 
   markAsFavorite(userId: string, apartmentId: string): APIResponse {
+    if (!userId || !apartmentId) {
+      return {
+        isSuccess: false,
+        message: 'Invalid user or apartment ID',
+      };
+    }
     const favorites = this.getAllFavorites();
     const existingFavorite = favorites.find(
       (favorite) =>
