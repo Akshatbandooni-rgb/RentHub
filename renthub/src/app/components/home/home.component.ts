@@ -108,9 +108,10 @@ export class HomeComponent implements OnInit {
   }
 
   filterApartments(filters: any): void {
+    debugger;
     const { location, price, amenities, vegetarian, nonVegetarian } = filters;
 
-    let results = this.filteredApartments;
+    let results = this.apartments;
     if (location?.trim()) {
       const loc = location.trim().toLowerCase();
       results = results.filter((apartment) =>
@@ -129,11 +130,14 @@ export class HomeComponent implements OnInit {
     }
 
     if (amenities && amenities.length > 0) {
-      results = results.filter((apartment) =>
-        amenities.every((amenity: Amenity) =>
-          apartment.amenities.includes(amenity)
-        )
-      );
+      results = results.filter((apartment) => {
+        const apartmentAmenities = apartment.amenities.map((a: string) =>
+          a.toLowerCase()
+        );
+        return amenities.every((amenity: Amenity) =>
+          apartmentAmenities.includes(amenity.toLowerCase())
+        );
+      });
     }
 
     this.filteredApartments = [...results];
@@ -144,6 +148,8 @@ export class HomeComponent implements OnInit {
 
   resetFilters(filters: any): void {
     console.log('Reset Filters:', filters);
+    this.apartments = this.db.getAllApartments();
+    this.filteredApartments = [...this.apartments];
   }
 
   handlePageEvent(event: PageEvent): void {
