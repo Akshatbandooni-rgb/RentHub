@@ -91,10 +91,17 @@
   }
 }
 .featured-sidebar h3 {
-  margin: 0 0 0.5rem 0;
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--primary);
+  margin: 0;
+}
+
+.featured-sidebar h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
 }
 .featured-sidebar p {
   color: var(--text-secondary);
