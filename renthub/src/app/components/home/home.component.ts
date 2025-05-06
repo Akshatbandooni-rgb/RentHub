@@ -90,10 +90,6 @@ export class HomeComponent implements OnInit {
     this.featuredListings = this.apartments.filter(
       (apartment) => apartment.featured
     );
-
-    this.searchForm.valueChanges.subscribe(() => {
-      this.filterApartments();
-    });
   }
 
   prevFeatured(): void {
@@ -111,29 +107,43 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/details', id]);
   }
 
-  filterApartments(): void {
-    const formValue = this.searchForm.value;
-    this.filteredApartments = this.apartments
-      .filter((apartment) => {
-        const locationMatch =
-          !formValue.location ||
-          apartment.location
-            .toLowerCase()
-            .includes(formValue.location.toLowerCase());
-        const priceMatch =
-          (!formValue.minPrice || apartment.price >= formValue.minPrice) &&
-          (!formValue.maxPrice || apartment.price <= formValue.maxPrice);
-        const vegetarianMatch =
-          !formValue.vegetarian ||
-          apartment.vegetarian === (formValue.vegetarian === 'yes');
-        const amenitiesMatch = Object.entries(formValue.amenities).every(
-          ([key, value]) =>
-            !value || apartment.amenities.includes(key as Amenity)
-        );
+  filterApartments(filters: any): void {
+    const { location, price, amenities, vegetarian, nonVegetarian } = filters;
 
-        return locationMatch && priceMatch && vegetarianMatch && amenitiesMatch;
-      })
-      .map((apartment) => ({ ...apartment, isFavorite: false }));
+    let results = this.filteredApartments;
+    if (location?.trim()) {
+      const loc = location.trim().toLowerCase();
+      results = results.filter((apartment) =>
+        apartment.location?.toLowerCase().includes(loc)
+      );
+    }
+
+    if (price) {
+      results = results.filter((apartment) => apartment.price <= price);
+    }
+
+    if (vegetarian && !nonVegetarian) {
+      results = results.filter((apartment) => apartment.vegetarian === true);
+    } else if (!vegetarian && nonVegetarian) {
+      results = results.filter((apartment) => apartment.vegetarian === false);
+    }
+
+    if (amenities && amenities.length > 0) {
+      results = results.filter((apartment) =>
+        amenities.every((amenity: Amenity) =>
+          apartment.amenities.includes(amenity)
+        )
+      );
+    }
+
+    this.filteredApartments = [...results];
+
+    console.log('Filters:', filters);
+    console.log('Filtered Apartments:', this.filteredApartments);
+  }
+
+  resetFilters(filters: any): void {
+    console.log('Reset Filters:', filters);
   }
 
   handlePageEvent(event: PageEvent): void {
