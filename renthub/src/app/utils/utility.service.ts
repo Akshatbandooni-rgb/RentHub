@@ -14,7 +14,13 @@ export class UtilityService {
   private loggedInUserSubject = new BehaviorSubject<User | null>(null);
   loggedInUser$ = this.loggedInUserSubject.asObservable();
 
-  constructor() {}
+  constructor() {
+    const loggedInUser = localStorage.getItem(Labels.LoggedInUser);
+    const token = localStorage.getItem(Labels.JWTToken);
+    if (token && loggedInUser) {
+      this.loggedInUserSubject.next(JSON.parse(loggedInUser));
+    }
+  }
 
   persistData(
     apartments: Apartment[] | null,
