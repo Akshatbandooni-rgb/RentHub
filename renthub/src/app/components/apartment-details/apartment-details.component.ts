@@ -92,7 +92,6 @@ export class ApartmentDetailsComponent implements OnInit, OnDestroy {
     this.comments = this.db
       .getCommentsForApartment(this.apartment.id)
       .map((comments) => {
-        debugger;
         const user = this.db.getUserById(comments.userId);
         return {
           ...comments,
@@ -134,7 +133,6 @@ export class ApartmentDetailsComponent implements OnInit, OnDestroy {
   }
 
   submitComment(): void {
-    debugger;
     if (this.commentForm.valid && this.apartment) {
       const user = this.authService.getLoggedInUser();
       if (!user) return;

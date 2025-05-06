@@ -47,7 +47,6 @@ export class FavoritesComponent implements OnInit, OnDestroy {
   }
 
   loadUserFavorites() {
-    debugger;
     if (!this.loggedInUser) {
       this.favorites = [];
       return;

@@ -29,7 +29,6 @@ export class NavbarComponent implements OnInit {
     private utilityService: UtilityService
   ) {}
   ngOnInit(): void {
-    debugger;
     this.isAuthenticated = this.authService.isAuthenticated();
     this.userName = this.authService.getLoggedInUser()?.name ?? '';
     // Subscribe to the loggedInUser observable to get the current user
