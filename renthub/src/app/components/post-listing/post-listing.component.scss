@@ -1,0 +1,214 @@
+.listing-container {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fafafa;
+  padding: 2rem 0 4rem 0;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+.airbnb-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  margin: 0 auto 2rem auto;
+  max-width: 800px;
+  width: 100%;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+.form-title,
+.preview-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: #222;
+  letter-spacing: -0.5px;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+mat-form-field,
+input,
+textarea,
+mat-radio-group,
+mat-checkbox,
+mat-error {
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+.form-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1rem 0 0.5rem 0;
+  gap: 2.5rem;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+.veg-group {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+.amenities {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0 0.5rem 0;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+.amenities-label {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #444;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+.amenities-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+.file-upload {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0 0.5rem 0;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+
+  .file-name {
+    color: #666;
+    font-size: 0.97rem;
+    font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+  }
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+.preview-btn-row {
+  justify-content: center;
+  margin-top: 0.5rem;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+.preview-container {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+}
+
+.preview-card {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+
+  img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: var(--radius) var(--radius) 0 0;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .price {
+    font-size: 1.45rem;
+    font-weight: bold;
+    color: #1976d2;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+  }
+
+  .location {
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+  }
+
+  .description {
+    margin: 1rem 0 1.5rem 0;
+    color: #444;
+    font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+  }
+
+  .details {
+    margin-top: 1rem;
+    font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+
+    p {
+      margin: 0.5rem 0;
+      font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+    }
+  }
+
+  .amenities {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+  }
+
+  .amenity-tag,
+  .airbnb-pill {
+    background-color: #f7f7f7;
+    color: #222;
+    border-radius: 999px;
+    padding: 0.35rem 1.1rem;
+    font-size: 1.05rem;
+    margin: 0.25rem 0.5rem 0.25rem 0;
+    display: inline-block;
+    border: 1px solid #e0e0e0;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    transition: background 0.2s;
+    font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+  }
+}
+
+// Remove vertical scrollbar for this component
+:host ::ng-deep .mat-horizontal-content-container {
+  overflow-y: visible !important;
+}
+
+// Force Nunito font on all Angular Material controls and their labels in this component
+:host ::ng-deep mat-checkbox,
+:host ::ng-deep mat-checkbox *,
+:host ::ng-deep mat-checkbox label,
+:host ::ng-deep .mat-checkbox-label,
+:host ::ng-deep mat-radio-group,
+:host ::ng-deep mat-radio-button,
+:host ::ng-deep mat-radio-button *,
+:host ::ng-deep .mat-radio-label {
+  font-family: var(--font-main), "Nunito", Arial, sans-serif !important;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}

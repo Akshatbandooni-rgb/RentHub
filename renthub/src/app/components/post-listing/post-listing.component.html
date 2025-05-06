@@ -1,1 +1,152 @@
-<p>post-listing works!</p>
+<div class="listing-container">
+  <mat-stepper linear #stepper>
+    <!-- Step 1: Basic Information -->
+    <mat-step [stepControl]="postForm">
+      <ng-template matStepLabel>List Apartment</ng-template>
+      <form [formGroup]="postForm" class="post-form airbnb-card">
+        <h2 class="form-title">List Your Apartment</h2>
+        <mat-form-field appearance="outline">
+          <mat-label>Title</mat-label>
+          <input
+            matInput
+            formControlName="title"
+            placeholder="Enter apartment title"
+          />
+          <mat-error *ngIf="postForm.get('title')?.hasError('required')">
+            Title is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <textarea
+            matInput
+            formControlName="description"
+            rows="4"
+            placeholder="Describe the apartment"
+          ></textarea>
+          <mat-error *ngIf="postForm.get('description')?.hasError('required')">
+            Description is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Price</mat-label>
+          <input
+            matInput
+            formControlName="price"
+            type="number"
+            placeholder="Enter monthly rent"
+          />
+          <mat-error *ngIf="postForm.get('price')?.hasError('required')">
+            Price is required
+          </mat-error>
+          <mat-error *ngIf="postForm.get('price')?.hasError('min')">
+            Price must be positive
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Location</mat-label>
+          <input
+            matInput
+            formControlName="location"
+            placeholder="Enter apartment location"
+          />
+          <mat-error *ngIf="postForm.get('location')?.hasError('required')">
+            Location is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-row">
+          <mat-checkbox formControlName="furnished">Furnished</mat-checkbox>
+          <mat-radio-group formControlName="vegetarian" class="veg-group">
+            <mat-radio-button value="yes">Vegetarian</mat-radio-button>
+            <mat-radio-button value="no">Non-Vegetarian</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="amenities" formGroupName="amenities">
+          <label class="amenities-label">Amenities:</label>
+          <div class="amenities-list">
+            @for (amenity of amenitiesKeys; track amenity) {
+            <mat-checkbox [formControlName]="amenity">
+              {{ amenities[amenity] }}
+            </mat-checkbox>
+            }
+          </div>
+        </div>
+
+        <div class="file-upload">
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+            #fileInput
+            style="display: none"
+          />
+          <button mat-raised-button color="primary" (click)="fileInput.click()">
+            <mat-icon>upload</mat-icon>
+            Upload Photo
+          </button>
+          <span class="file-name" *ngIf="selectedFile">{{
+            selectedFile.name
+          }}</span>
+        </div>
+
+        <div class="button-row">
+          <button
+            matStepperNext
+            mat-raised-button
+            color="primary"
+            (click)="generatePreview()"
+            [disabled]="!postForm.valid || !selectedFile"
+          >
+            Preview
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Step 2: Preview -->
+    <mat-step>
+      <ng-template matStepLabel>Preview</ng-template>
+      <div class="preview-container">
+        <mat-card class="preview-card airbnb-card" *ngIf="previewData">
+          <img [src]="previewData.image" [alt]="previewData.title" />
+          <mat-card-content>
+            <h2 class="preview-title">{{ previewData.title }}</h2>
+            <p class="price">${{ previewData.price }}/month</p>
+            <p class="location">{{ previewData.location }}</p>
+            <p class="description">{{ previewData.description }}</p>
+            <div class="details">
+              <p>
+                <strong>Furnished:</strong>
+                {{ previewData.furnished ? "Yes" : "No" }}
+              </p>
+              <p>
+                <strong>Vegetarian:</strong>
+                {{ previewData.vegetarian ? "Yes" : "No" }}
+              </p>
+              <div class="amenities">
+                <strong>Amenities:</strong>
+                <span
+                  *ngFor="let amenity of previewData.amenities"
+                  class="amenity-tag airbnb-pill"
+                  >{{ amenity }}</span
+                >
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <div class="button-row preview-btn-row">
+          <button mat-button (click)="stepper.previous()">Back</button>
+          <button mat-raised-button color="primary" (click)="submitListing()">
+            Submit
+          </button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>
