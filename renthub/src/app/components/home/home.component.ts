@@ -131,12 +131,11 @@ export class HomeComponent implements OnInit {
 
     if (amenities && amenities.length > 0) {
       results = results.filter((apartment) => {
-        const apartmentAmenities = apartment.amenities.map((a: string) =>
-          a.toLowerCase()
-        );
-        return amenities.every((amenity: Amenity) =>
-          apartmentAmenities.includes(amenity.toLowerCase())
-        );
+        return amenities.every((amenity: keyof typeof Amenity) => {
+          const enumValue = Amenity[amenity];
+          const match = apartment.amenities.includes(enumValue);
+          return match;
+        });
       });
     }
 
