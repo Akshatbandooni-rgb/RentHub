@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
     private utilityService: UtilityService,
     private dbService: DBService
   ) {}
+
   ngOnInit(): void {
     this.apartments = this.dbService.generateApartments();
     this.comments = this.dbService.generateComments(this.apartments);
