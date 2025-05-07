@@ -53,8 +53,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   pageSizeOptions = [6, 12, 18, 24, 48];
   featuredListings: Apartment[] = [];
   featuredIndex = 0;
-  IMG_URL =
-    'https://img.freepik.com/free-photo/3d-rendering-loft-luxury-living-room-with-bookshelf-near-bookshelf_105762-2224.jpg?semt=ais_hybrid&w=740';
   filterCriteria = {};
 
   constructor(

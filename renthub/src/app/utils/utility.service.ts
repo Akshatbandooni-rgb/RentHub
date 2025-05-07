@@ -13,6 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 export class UtilityService {
   private loggedInUserSubject = new BehaviorSubject<User | null>(null);
   loggedInUser$ = this.loggedInUserSubject.asObservable();
+  readonly PUBLIC_BASE_PATH = '/images/';
 
   constructor() {
     const loggedInUser = localStorage.getItem(Labels.LoggedInUser);
@@ -20,6 +21,10 @@ export class UtilityService {
     if (token && loggedInUser) {
       this.loggedInUserSubject.next(JSON.parse(loggedInUser));
     }
+  }
+
+  getAssetPath(relativePath: string): string {
+    return `${this.PUBLIC_BASE_PATH}${relativePath}`;
   }
 
   persistData(
