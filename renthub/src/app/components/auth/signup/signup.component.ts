@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../utils/utility.service';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -12,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { Labels } from '../../../enums/labels.enum';
 
 @Component({
   selector: 'app-signup',
@@ -34,7 +36,8 @@ export class SignupComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private utilityService: UtilityService
   ) {
     this.signupForm = this.fb.group(
       {
@@ -58,6 +61,11 @@ export class SignupComponent {
       const { name, email, password } = this.signupForm.value;
       const response = this.authService.register(email, password, name);
       if (response.isSuccess) {
+        // Store user data in local storage
+        const user = response.data;
+        localStorage.setItem(Labels.JWTToken, user.id);
+        localStorage.setItem(Labels.LoggedInUser, JSON.stringify(user));
+        this.utilityService.setLoggedInUser(user);
         this.router.navigate(['/']);
       } else {
         this.errorMessage = response.message;
