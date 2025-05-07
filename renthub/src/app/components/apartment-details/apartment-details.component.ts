@@ -145,6 +145,10 @@ export class ApartmentDetailsComponent implements OnInit, OnDestroy {
       };
       this.db.addComment(newComment);
       this.commentForm.reset();
+      this.commentForm.get('content')?.setErrors(null);
+      this.commentForm.markAsPristine();
+      this.commentForm.markAsUntouched();
+      this.commentForm.updateValueAndValidity();
       this.loadComments();
     }
   }
