@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   pageSizeOptions = [6, 12, 18, 24, 48];
   featuredListings: Apartment[] = [];
   featuredIndex = 0;
-  filterCriteria = {};
+  filterCriteria: any = null;
 
   constructor(
     private fb: FormBuilder,

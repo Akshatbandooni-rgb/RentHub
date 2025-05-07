@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -29,6 +29,7 @@ import { CommonModule } from '@angular/common';
 export class FilterComponent implements OnInit {
   filterForm!: FormGroup;
   amenitiesKeys: string[] = [];
+  @Input() filterCriteria: any = null;
   @Output() filterApplied = new EventEmitter<any>();
   @Output() resetFilter = new EventEmitter<any>();
 
@@ -48,6 +49,27 @@ export class FilterComponent implements OnInit {
       vegetarian: [false],
       nonVegetarian: [false],
     });
+    if (this.filterCriteria) {
+      console.log(this.filterForm.controls);
+      console.log(this.filterCriteria);
+      this.setDefaultFormValues(this.filterCriteria);
+    }
+  }
+
+  setDefaultFormValues(filterCriteria: any) {
+    if (filterCriteria && Object.keys(filterCriteria).length > 0) {
+      this.filterForm.patchValue({
+        location: filterCriteria.location,
+        price: filterCriteria.price,
+        vegetarian: filterCriteria.vegetarian,
+        nonVegetarian: filterCriteria.nonVegetarian,
+      });
+      const amenities = this.filterForm.get('amenities') as FormGroup;
+      for (const key in Amenity) {
+        amenities.get(key)?.setValue(filterCriteria?.amenities?.includes(key));
+      }
+    }
+    console.log('default Form set', this.filterForm.value);
   }
 
   applyFilters() {

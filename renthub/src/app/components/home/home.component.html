@@ -2,6 +2,7 @@
   <div class="home-main-content">
     <div class="home-filter-col">
       <app-filter
+        [filterCriteria]="filterCriteria"
         (filterApplied)="filterApartments($event)"
         (resetFilter)="resetFilters($event)"
       ></app-filter>
