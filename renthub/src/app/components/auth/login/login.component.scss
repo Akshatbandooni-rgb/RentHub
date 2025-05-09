@@ -107,9 +107,11 @@ mat-form-field {
     color: var(--primary);
     text-decoration: none;
     transition: color 0.3s ease;
+    cursor: pointer; /* Ensures the pointer cursor appears */
+    z-index: 1; /* Ensures it is clickable if overlapping elements exist */
 
     &:hover {
-      color: var(--primary);
+      color: #e31c5f; /* Slightly darker shade for hover effect */
     }
   }
 }
