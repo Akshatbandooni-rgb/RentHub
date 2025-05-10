@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { Labels } from '../../../enums/labels.enum';
 
@@ -25,6 +25,7 @@ import { Labels } from '../../../enums/labels.enum';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
+    RouterLink,
   ],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
