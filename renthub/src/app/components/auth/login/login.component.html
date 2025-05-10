@@ -49,6 +49,9 @@
       </button>
     </form>
   </mat-card-content>
+  <mat-label class="error-message" *ngIf="errorMessage">{{
+    errorMessage
+  }}</mat-label>
 
   <mat-card-actions class="login-actions">
     <span>Don't have an account?</span>
