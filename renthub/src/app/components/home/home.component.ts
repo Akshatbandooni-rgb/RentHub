@@ -92,7 +92,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       isFavorite: false,
     }));
 
-    this.featuredListings = this.apartments.filter(
+    this.getFeaturedListings();
+  }
+
+  getFeaturedListings(): void {
+    const allApartments = this.db.getAllApartments();
+    this.featuredListings = allApartments.filter(
       (apartment) => apartment.featured
     );
   }
