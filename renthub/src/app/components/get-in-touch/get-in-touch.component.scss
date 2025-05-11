@@ -73,3 +73,32 @@ mat-error {
   background: linear-gradient(to right, #e61e4d 0%, #e31c5f 50%, #d70466 100%);
   color: #fff;
 }
+
+/* filepath: src/app/components/get-in-touch/get-in-touch.component.scss */
+
+.get-in-touch-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Add spacing between elements */
+  padding: 16px; /* Add padding inside the dialog */
+}
+
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: none;
+  border-radius: 8px;
+}

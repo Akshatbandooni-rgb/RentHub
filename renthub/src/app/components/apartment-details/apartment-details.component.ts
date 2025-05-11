@@ -22,6 +22,8 @@ import { Comment } from '../../interfaces/comments.interface';
 import { DBService } from '../../services/db.service';
 import { UtilityService } from '../../utils/utility.service';
 import { Subject, takeUntil } from 'rxjs';
+import { DialogService } from '../../services/dialog.service';
+import { GetInTouchComponent } from '../get-in-touch/get-in-touch.component';
 
 @Component({
   selector: 'app-apartment-details',
@@ -63,7 +65,8 @@ export class ApartmentDetailsComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private db: DBService,
     public authService: AuthService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private dialogService: DialogService
   ) {
     this.commentForm = this.fb.group({
       content: ['', [Validators.required, Validators.minLength(3)]],
@@ -155,6 +158,15 @@ export class ApartmentDetailsComponent implements OnInit, OnDestroy {
 
   replyToComment(commentId: string): void {
     // Implement reply functionality
+  }
+
+  openGetInTouchDialog(): void {
+    if (!this.apartment) return;
+    const user = this.authService.getLoggedInUser();
+    this.dialogService.open(GetInTouchComponent, {
+      apartment: this.apartment,
+      user: user,
+    });
   }
 
   ngOnDestroy() {

@@ -36,6 +36,17 @@
 
       <mat-divider class="section-divider"></mat-divider>
 
+      <button
+        *ngIf="isAuthenticated"
+        mat-raised-button
+        color="accent"
+        class="express-interest-btn"
+        (click)="openGetInTouchDialog()"
+        style="margin: 1.5rem 0; width: 100%; font-weight: 700"
+      >
+        Express Interest
+      </button>
+
       <div class="comments-section">
         <h3 class="section-heading">Comments</h3>
         <form

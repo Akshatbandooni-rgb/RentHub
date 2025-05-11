@@ -41,3 +41,13 @@ mat-icon,
   -webkit-font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
 }
+
+.custom-dialog-container {
+  padding: 24px;
+  border-radius: 12px;
+  font-family: "Nunito", "Inter", "Montserrat", Arial, sans-serif;
+}
+
+.mat-dialog-container {
+  overflow: hidden;
+}
