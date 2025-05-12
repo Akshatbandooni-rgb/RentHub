@@ -1,3 +1,4 @@
+import { AppStore } from './../../store/app-store.service';
 import { Amenity } from './../../enums/amenities.enum';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
@@ -47,7 +48,8 @@ export class PostListingComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private dbService: DBService
+    private dbService: DBService,
+    private appStore: AppStore
   ) {
     const amenities = Object.keys(Amenity).reduce(
       (acc: Record<string, boolean>, key: string) => {
@@ -97,8 +99,9 @@ export class PostListingComponent implements OnInit {
 
   submitListing(): void {
     if (this.previewData) {
-      console.log('Submitting listing:', this.previewData);
       this.dbService.addApartment(this.previewData);
+      this.appStore.setFilterCriteria({});
+      this.appStore.setFilteredApartments([]);
       this.router.navigate(['/']);
     }
   }
