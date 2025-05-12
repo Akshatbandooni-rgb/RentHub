@@ -151,14 +151,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     this.filteredApartments = [...results];
-
-    console.log('Filters:', filters);
-    console.log('Filtered Apartments:', this.filteredApartments);
   }
 
   resetFilters(filters: any): void {
     this.filterCriteria = filters;
-    console.log('Reset Filters:', filters);
     this.apartments = this.db.getAllApartments();
     this.filteredApartments = [...this.apartments];
   }

@@ -50,7 +50,6 @@ export class ApartmentCardComponent implements OnInit, OnDestroy {
   }
 
   viewApartmentDetails(apartment: ApartmentCardData): void {
-    console.log('viewApartmentDetails', apartment);
     this.viewDetails.emit(apartment.id);
   }
 

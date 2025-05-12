@@ -40,8 +40,7 @@ export class FilterComponent implements OnInit {
       amenityControls[key] = [false];
       this.amenitiesKeys.push(key);
     }
-    console.log(this.amenitiesKeys);
-    console.log(amenityControls);
+
     this.filterForm = this.fb.group({
       location: [''],
       price: [''],
@@ -50,8 +49,6 @@ export class FilterComponent implements OnInit {
       nonVegetarian: [false],
     });
     if (this.filterCriteria) {
-      console.log(this.filterForm.controls);
-      console.log(this.filterCriteria);
       this.setDefaultFormValues(this.filterCriteria);
     }
   }
@@ -69,11 +66,9 @@ export class FilterComponent implements OnInit {
         amenities.get(key)?.setValue(filterCriteria?.amenities?.includes(key));
       }
     }
-    console.log('default Form set', this.filterForm.value);
   }
 
   applyFilters() {
-    console.log(this.filterForm.value);
     const formValues = this.filterForm.value;
     // Filter out the amenities that are checked by user
     const selectedAmenities = Object.keys(formValues.amenities).filter(
@@ -91,7 +86,7 @@ export class FilterComponent implements OnInit {
 
   resetFilters() {
     this.filterForm.reset(); // set all value to null
-    console.log(this.filterForm.value);
+
     const amenityControls: any = {};
     for (const key in Amenity) {
       amenityControls[key] = false;
@@ -110,8 +105,7 @@ export class FilterComponent implements OnInit {
       amenities: [],
       vegetarian: formValues.vegetarian,
     };
-    console.log(this.filterForm.value);
-    console.log(resettedFilters);
+
     this.resetFilter.emit(resettedFilters);
   }
 }

@@ -48,8 +48,6 @@ export class LoginComponent implements OnDestroy {
       const { email, password } = this.loginForm.value;
       // Call the AuthService to handle login logic
       const response = this.authService.login(email, password);
-
-      console.log(response);
       if (response.isSuccess) {
         this.errorMessage = '';
         this.router.navigate(['/']);
