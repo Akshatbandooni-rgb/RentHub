@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     } else {
       this.apartments = this.db.getAllApartments();
     }
-    if (storedFilterCriteria) {
+    if (storedFilterCriteria && Object.keys(storedFilterCriteria).length > 0) {
       this.filterCriteria = storedFilterCriteria;
     }
 
