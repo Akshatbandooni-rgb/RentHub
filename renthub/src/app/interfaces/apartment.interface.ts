@@ -15,9 +15,9 @@ export interface Apartment extends BaseApartment {
   amenities: Amenity[];
   vegetarian: boolean;
   landlordId?: string;
+  isFavorite?: boolean;
 }
 
 export interface ApartmentCardData extends Apartment {
   badge?: string;
-  isFavorite?: boolean;
 }

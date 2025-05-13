@@ -8,12 +8,23 @@ import { Comment } from '../interfaces/comments.interface';
 import { Labels } from '../enums/labels.enum';
 import { APIResponse } from '../interfaces/APIResponse.interface';
 import { Favorite } from '../interfaces/favorite.interface';
+import { Subject, takeUntil } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DBService {
-  constructor(private utilityService: UtilityService) {}
+  private destroy$ = new Subject<void>();
+  loggedInUser: User | null = null;
+  constructor(private utilityService: UtilityService) {
+    this.utilityService.loggedInUser$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((user) => {
+        if (user) {
+          this.loggedInUser = user;
+        }
+      });
+  }
 
   generateApartments(): Apartment[] {
     return [
@@ -419,8 +430,25 @@ export class DBService {
   }
 
   getAllApartments(): Apartment[] {
-    const apartments = localStorage.getItem(Labels.Apartments);
-    return apartments ? JSON.parse(apartments) : [];
+    const apartmentsData = localStorage.getItem(Labels.Apartments);
+    const apartments: Apartment[] = apartmentsData
+      ? JSON.parse(apartmentsData)
+      : [];
+
+    const userId = this.loggedInUser?.id || '';
+    const userFavorites = this.getUserFavorites(userId);
+
+    if (userFavorites.length > 0) {
+      const favoriteApartmentIds = new Set(
+        userFavorites.map((fav) => fav.apartmentId)
+      );
+
+      apartments.forEach((apartment) => {
+        apartment.isFavorite = favoriteApartmentIds.has(apartment.id);
+      });
+    }
+
+    return apartments;
   }
 
   getApartmentById(id: string): Apartment | null {
