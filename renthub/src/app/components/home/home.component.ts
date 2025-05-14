@@ -126,7 +126,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   filterApartments(filters: any): void {
     this.filterCriteria = filters;
-    debugger;
     const { location, price, amenities, vegetarian, nonVegetarian } = filters;
 
     let results = this.apartments;
