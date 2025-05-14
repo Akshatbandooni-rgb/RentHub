@@ -9,7 +9,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginatorModule,
+  PageEvent,
+  MatPaginator,
+} from '@angular/material/paginator';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { ApartmentCardComponent } from '../apartment-card/apartment-card.component';
@@ -21,6 +25,7 @@ import {
 } from '../../interfaces/apartment.interface';
 import { Amenity } from '../../enums/amenities.enum';
 import { FilterComponent } from '../filter/filter.component';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -54,6 +59,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   featuredListings: Apartment[] = [];
   featuredIndex = 0;
   filterCriteria: any = null;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private fb: FormBuilder,
@@ -151,17 +158,27 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     this.filteredApartments = [...results];
+    this.resetPaginator();
   }
 
   resetFilters(filters: any): void {
     this.filterCriteria = filters;
     this.apartments = this.db.getAllApartments();
     this.filteredApartments = [...this.apartments];
+    this.resetPaginator();
   }
 
   handlePageEvent(event: PageEvent): void {
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
+  }
+
+  resetPaginator() {
+    this.pageSize = 6;
+    this.pageIndex = 0;
+    if (this.paginator) {
+      this.paginator.firstPage();
+    }
   }
 
   toggleFavorite(apartmentId: string): void {
