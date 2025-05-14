@@ -25,7 +25,7 @@
 
 ### 🏡 Apartment Listings Management
 
-- Create, update, and manage apartment listings with photos, descriptions, contact info.
+- Create apartment listings with photos, descriptions, contact info.
 
 ### ⭐ Interest Expression
 
@@ -46,9 +46,9 @@
 
 ### 💾 LocalStorage for Data Persistence
 
-- Stores session data, authentication tokens, and favorites in **LocalStorage** for persistence across refreshes.
+- Stores apartment listings, user data and favorites in **LocalStorage** for persistence across refreshes.
 
-## 🖼️ #Screenshots
+## 🖼️ Screens
 
 | Screen                  | Description                                                           |
 | ----------------------- | --------------------------------------------------------------------- |
@@ -64,12 +64,12 @@
 
 | Category        | Technology                     |
 | --------------- | ------------------------------ |
-| Framework       | Angular (v16+)                 |
+| Framework       | Angular (v19)                  |
 | Language        | TypeScript                     |
-| UI Library      | Angular Material / Bootstrap   |
+| UI Library      | Angular Material               |
 | Storage         | LocalStorage API (Client-side) |
 | Version Control | Git & GitHub                   |
-| Deployment      | Firebase / Netlify             |
+| Deployment      | Netlify                        |
 
 ## ⚙️ Installation
 
@@ -102,9 +102,8 @@ The application will auto-reload on code changes.
 
 Unit tests for:
 
-- Components (e.g., PostListComponent)
-- Services (e.g., AuthService)
-- Modules (e.g., ListingModule)
+- Components (Filter Component)
+- Services ( AuthService)
 
 Run tests using:
 
@@ -114,11 +113,11 @@ ng test
 
 ## 🚀 Deployment
 
-- Deployed on **Firebase** / **Netlify** (Free hosting providers).
+- Deployed on **Netlify**
 - Production build command:
 
 ```bash
-ng build --prod
+ng build --configuration = 'production'
 ```
 
 ## 🌟 Bonus Features
@@ -132,24 +131,20 @@ ng build --prod
 - Protects sensitive routes:
   - /create-post
   - /favourites
-  - /profile
 - Redirects unauthenticated users to login.
 
 ### LocalStorage Usage
 
 - **Purpose:**
-  - Persist authentication tokens.
+  - Store Apartment listings data.
   - Store user session data & favorites.
-- **Advantages:**
-  - Data retention on browser refresh.
-  - Lightweight client-side storage.
 
 ## 📊 Evaluation Criteria
 
 ✅ Deliverables Checklist:
 
 - Fully functional Angular application.
-- Unit tests for component, service, and module.
+- Unit tests for component(Filter Component), service(Auth Service).
 - GitHub repository shared.
 - Live deployed app link provided.
 - README file with all details.
@@ -159,13 +154,13 @@ ng build --prod
 
 ## 🔐 Test Credentials
 
-- **Email:** testuser@renthub.com
-- **Password:** Test@123
+- **Email:** Akshat@gmail.com
+- **Password:** Akshat@123
 
 ## 🌐 Live Demo & Repository
 
-- 🔗 **Deployed App:** [RentHub Live](#)
-- 🔗 **Source Code:** [GitHub Repository](#)
+- 🔗 **Deployed App:** [RentHub Live](https://akshat-renthub.netlify.app/)
+- 🔗 **Source Code:** [GitHub Repository](https://github.com/Akshatbandooni-rgb/RentHub/tree/master/renthub)
 
 ## ✅ Summary
 
