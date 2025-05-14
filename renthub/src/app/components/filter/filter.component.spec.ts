@@ -36,7 +36,7 @@ fdescribe('FilterComponent', () => {
   it('should initialize the form with default values', () => {
     expect(component.filterForm.value).toEqual({
       location: '',
-      price: '',
+      price: 0,
       amenities: {
         Wifi: false,
         AirConditioning: false,
@@ -95,7 +95,7 @@ fdescribe('FilterComponent', () => {
 
     expect(component.filterForm.value).toEqual({
       location: '',
-      price: '',
+      price: 0,
       amenities: {
         Wifi: false,
         AirConditioning: false,
