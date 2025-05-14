@@ -43,7 +43,7 @@ export class FilterComponent implements OnInit {
 
     this.filterForm = this.fb.group({
       location: [''],
-      price: [''],
+      price: [0],
       amenities: this.fb.group(amenityControls),
       vegetarian: [false],
       nonVegetarian: [false],
@@ -93,7 +93,7 @@ export class FilterComponent implements OnInit {
     }
     this.filterForm.setValue({
       location: '',
-      price: '',
+      price: 0,
       amenities: amenityControls,
       vegetarian: false,
       nonVegetarian: false,
