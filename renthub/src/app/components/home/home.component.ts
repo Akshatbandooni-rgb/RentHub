@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       amenities: this.fb.group(amenityControls),
       vegetarian: [''],
     });
-
+    debugger;
     const storedApartments = this.appStore.getFilteredApartments();
     const storedFilterCriteria = this.appStore.getFilterCriteria();
     if (storedApartments && storedApartments.length > 0) {
@@ -94,10 +94,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.filterCriteria = storedFilterCriteria;
     }
 
-    this.filteredApartments = [...this.apartments].map((apartment) => ({
-      ...apartment,
-      isFavorite: false,
-    }));
+    this.filteredApartments = [...this.apartments];
 
     this.getFeaturedListings();
   }
